@@ -1,51 +1,75 @@
-import {useGSAP} from "@gsap/react";
+import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 import ModelView from "./ModelView";
-import {useState} from "react";
-import {yellowImg} from "../utils";
+import { yellowImg } from "../utils";
 import * as THREE from "three";
-
+import { useThree } from "@react-three/fiber";
+import { View } from "@react-three/drei";
 
 const Model1 = () => {
+  const [size, setSize] = useState("small");
+  const [model, setModel] = useState({
+    title: "iPhone 16 Pro in Natural Titanium",
+    color: ["#8F8A81", "#FFE7B9", "#6F6C64"],
+    img: yellowImg,
+  });
 
-  useGSAP (() =>{
-    const [size, setSize] = useState ('small');
-    const [model, setModel] = useState ({
-      title: 'iphone 16 Pro in Natural Titanium',
-      color:['#8F8A81', '#FFE7B9', '6F6C64'],
-      img:yellowImg,
-    })
-    //camera control for the model view
-    const cameraControlSmall = useRef();
-    const cameraControlLarge = useRef();
+  // Camera control for the model view
+  const cameraControlSmall = useRef();
+  const cameraControlLarge = useRef();
 
-    const small = useRef(new useThree.Group());
-    const large = useRef(new useThree.Group());
-    
- 
-    gsap.to('#heading',{ y:0, opacity:1
+  // Model groups
+  const small = useRef(new THREE.Group());
+  const large = useRef(new THREE.Group());
 
-    })
-  },[])
+  // Rotation states
+  const [smallRotation, setSmallRotation] = useState(0);
+  const [largeRotation, setLargeRotation] = useState(0);
+
+  // GSAP Animation
+  useEffect(() => {
+    gsap.to("#heading", { y: 0, opacity: 1, duration: 1 });
+  }, []);
+
   return (
     <section className="common-padding">
       <div className="screen-max-width">
         <h1 id="heading" className="section-heading">
           Take a closer look.
-
         </h1>
         <div className="flex flex-col items-center mt-5">
           <div className="w-full h-[75vh] md:h-[90vh] overflow-hidden relative">
-            <ModelView />
+            <ModelView
+              index={1}
+              groupRef={small}
+              gsapType="view1"
+              controlRef={cameraControlSmall}
+              setRotationState={setSmallRotation}
+              item={model}
+              size={size}
 
 
+            />
+            <ModelView
+              index={2}
+              groupRef={large}
+              gsapType="view2"
+              controlRef={cameraControlLarge}
+              setRotationState={setLargeRotation}
+              item={model}
+              size={size}
+
+
+            />
+
+            <canvas>
+              <View.Port />
+            </canvas>
           </div>
-
         </div>
-
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default Model1
+export default Model1;
