@@ -3,11 +3,10 @@ import gsap from "gsap";
 import ModelView from "./ModelView";
 import {useState} from "react";
 import {yellowImg} from "../utils";
+import * as THREE from "three";
 
-import * as THREE from 'three';
 
-
-const model = () => {
+const Model1 = () => {
 
   useGSAP (() =>{
     const [size, setSize] = useState ('small');
@@ -49,4 +48,4 @@ const model = () => {
   )
 }
 
-export default model
+export default Model1
