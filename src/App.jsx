@@ -1,7 +1,7 @@
 import Navbar from './components/Navbar';
 import Highlights from './components/Highlights';
 import Hero from './components/Hero';
-import model from './components/model';
+import Model1 from './components/Model1';
 
 
 
@@ -13,7 +13,8 @@ const App = () => {
       <Navbar />
       <Hero />
       <Highlights />
-      <model />
+      <Model1 />
+      
     </main>
   )
 }
